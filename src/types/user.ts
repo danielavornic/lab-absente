@@ -13,7 +13,7 @@ export interface Student extends User {
 export interface Absenta {
   id: number;
   numeStudent: string;
-  prof: User;
+  numeProf: string;
   subject: string;
   status: AbsentaStatus;
   datesAbsenta: DataAbsenta[];

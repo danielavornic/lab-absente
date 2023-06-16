@@ -1,46 +1,73 @@
 import { HStack, VStack } from "@chakra-ui/react";
 import { Layout, StudentAttendenceCard } from "components";
 import { useSearchParams } from "react-router-dom";
-import { AbsentaStatus } from "types";
+import { Absenta, AbsentaStatus } from "types";
 
 import Select from "react-select";
 
-const attendences = [
+const attendences: Absenta[] = [
   {
     id: 1,
-    subject: "Proiectare conceptuală a unei aplicaţii IT",
-    count: 2,
-    prof: "Cojuhari Elena",
+    numeStudent: "John Doe",
+    numeProf: "Professor Smith",
+    subject: "Math",
     status: AbsentaStatus.NEACHITAT,
-    year: 2021,
-    isChanged: false,
+    datesAbsenta: [
+      { date: "2023-06-01", time: "09:00" },
+      { date: "2023-06-02", time: "10:30" },
+    ],
+    datesRecuperare: [
+      { date: "2023-06-03", time: "14:00" },
+      { date: "2023-06-04", time: "16:30" },
+    ],
   },
   {
     id: 2,
-    subject: "Comunicare şi scriere academică",
-    count: 2,
-    prof: "Gogoi Elena",
+    numeStudent: "John Doe",
+    numeProf: "Professor Johnson",
+    subject: "English",
     status: AbsentaStatus.ACHITAT,
-    year: 2021,
-    isChanged: true,
+    datesAbsenta: [
+      { date: "2023-06-05", time: "11:00" },
+      { date: "2023-06-06", time: "13:30" },
+    ],
   },
   {
     id: 3,
-    subject: "Metode Numerice",
-    count: 2,
-    prof: "Viorel Bostan",
-    status: AbsentaStatus.ACHITAT,
-    year: 2023,
-    isChanged: false,
+    numeStudent: "John Doe",
+    numeProf: "Professor Brown",
+    subject: "Science",
+    status: AbsentaStatus.IN_PROGRESS,
+    datesAbsenta: [
+      { date: "2023-06-07", time: "10:00" },
+      { date: "2023-06-08", time: "12:30" },
+    ],
   },
   {
     id: 4,
-    subject: "Proiectare conceptuală a unei aplicaţii IT",
-    count: 2,
-    prof: "Gavrilița Mihai",
+    numeStudent: "John Doe",
+    numeProf: "Professor Davis",
+    subject: "History",
     status: AbsentaStatus.RECUPERAT,
-    year: 2022,
-    isChanged: false,
+    datesAbsenta: [
+      { date: "2023-06-09", time: "09:30" },
+      { date: "2023-06-10", time: "11:45" },
+    ],
+    datesRecuperare: [
+      { date: "2023-06-11", time: "15:00" },
+      { date: "2023-06-12", time: "17:30" },
+    ],
+  },
+  {
+    id: 5,
+    numeStudent: "John Doe",
+    numeProf: "Professor Wilson",
+    subject: "Geography",
+    status: AbsentaStatus.NEACHITAT,
+    datesAbsenta: [
+      { date: "2023-06-13", time: "08:30" },
+      { date: "2023-06-14", time: "10:45" },
+    ],
   },
 ];
 
@@ -191,10 +218,10 @@ export const StudentAttendence = () => {
         {attendences.map((attendence, index) => (
           <StudentAttendenceCard
             key={attendence.id}
+            absenta={attendence}
             borderBottom={index !== attendences.length - 1 ? "1px solid #E2E8F0" : "none"}
             roundedTop={index === 0 ? "md" : "none"}
             roundedBottom={index === attendences.length - 1 ? "md" : "none"}
-            {...attendence}
           />
         ))}
       </VStack>

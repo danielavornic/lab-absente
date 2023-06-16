@@ -15,27 +15,23 @@ import {
   Badge,
   Box,
 } from "@chakra-ui/react";
-import { AbsentaStatus } from "types";
+import { Absenta, AbsentaStatus } from "types";
 
 interface StudentAttendenceCardProps extends BoxProps {
-  id: number;
-  subject: string;
-  count: number;
-  prof: string;
-  status: AbsentaStatus;
-  year: number;
+  absenta: Absenta;
   isChanged: boolean;
 }
 
 export const StudentAttendenceCard = ({
-  subject,
-  count,
-  prof,
-  status,
-  year,
+  absenta,
   isChanged,
   ...rest
 }: StudentAttendenceCardProps) => {
+  const { numeStudent, numeProf: prof, subject, status, datesAbsenta, datesRecuperare } = absenta;
+
+  const year = datesAbsenta[0].date.slice(0, 4);
+  const count = datesAbsenta.length;
+
   const { isOpen, onOpen, onClose } = useDisclosure();
   const iconLetter = subject[0].toUpperCase();
   const iconColor = isChanged ? "red.500" : "brand.500";
