@@ -3,14 +3,15 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { useAuth } from "hooks";
 import { Role } from "types";
 import { ProtectedRoute } from "./ProtectedRoute";
+import { Noutati } from "pages";
 
 const Routes = () => {
   const { token, user } = useAuth();
 
   const routesForPublic = [
     {
-      path: "/about-us",
-      element: <div>About Us</div>,
+      path: "/noutati",
+      element: <Noutati />,
     },
   ];
 
@@ -20,12 +21,12 @@ const Routes = () => {
       element: <ProtectedRoute />,
       children: [
         {
-          path: "/absente",
-          element: <div>Absente</div>,
+          path: "/noutati",
+          element: <Noutati />,
         },
         {
-          path: "/dashboard",
-          element: <div>Dashboard</div>,
+          path: "/absente",
+          element: <div>Absente</div>,
         },
       ],
     },
@@ -51,11 +52,7 @@ const Routes = () => {
   const routesForNotAuthenticatedOnly = [
     {
       path: "/",
-      element: <div>Home Page</div>,
-    },
-    {
-      path: "/login",
-      element: <div>Login</div>,
+      element: <div>login</div>,
     },
   ];
 
