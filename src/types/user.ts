@@ -6,17 +6,8 @@ export interface User {
 }
 
 export interface Student extends User {
-  role: Role.STUDENT;
   group: string;
   absente: Absenta[];
-}
-
-export interface Professor extends User {
-  role: Role.PROF;
-}
-
-export interface Admin extends User {
-  role: Role.ADMIN;
 }
 
 export interface Absenta {
