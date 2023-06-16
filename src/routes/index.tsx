@@ -3,7 +3,7 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { useAuth } from "hooks";
 import { Role } from "types";
 import { ProtectedRoute } from "./ProtectedRoute";
-import { Noutati } from "pages";
+import { Login, Noutati } from "pages";
 import { StudentAttendence } from "pages/StudentAttendence";
 
 const Routes = () => {
@@ -57,7 +57,11 @@ const Routes = () => {
   const routesForNotAuthenticatedOnly = [
     {
       path: "/",
-      element: <div>login</div>,
+      element: <div>Home Page</div>,
+    },
+    {
+      path: "/login",
+      element: <Login />,
     },
   ];
 
