@@ -17,7 +17,7 @@ export interface Absenta {
   subject: string;
   status: AbsentaStatus;
   datesAbsenta: DataAbsenta[];
-  datesRecuperare: DataAbsenta[];
+  datesRecuperare?: DataAbsenta[];
 }
 
 export interface DataAbsenta {
@@ -28,7 +28,7 @@ export interface DataAbsenta {
 export enum AbsentaStatus {
   NEACHITAT = "neachitat",
   ACHITAT = "achitat",
-  IN_PROGRESS = "in_progress",
+  IN_PROGRESS = "in progres",
   RECUPERAT = "recuperat",
 }
 

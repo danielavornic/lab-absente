@@ -4,6 +4,7 @@ import { useAuth } from "hooks";
 import { Role } from "types";
 import { ProtectedRoute } from "./ProtectedRoute";
 import { Noutati } from "pages";
+import { StudentAttendence } from "pages/StudentAttendence";
 
 const Routes = () => {
   const { token, user } = useAuth();
@@ -12,6 +13,10 @@ const Routes = () => {
     {
       path: "/noutati",
       element: <Noutati />,
+    },
+    {
+      path: "/absente",
+      element: <StudentAttendence />,
     },
   ];
 
@@ -26,7 +31,7 @@ const Routes = () => {
         },
         {
           path: "/absente",
-          element: <div>Absente</div>,
+          element: <StudentAttendence />,
         },
       ],
     },
@@ -59,7 +64,7 @@ const Routes = () => {
   const router = createBrowserRouter([
     ...routesForPublic,
     ...(!token ? routesForNotAuthenticatedOnly : []),
-    ...(token && user && user.role === Role.STUDENT ? routesForStudentsOnly : []),
+    ...(token && user && user.role !== Role.STUDENT ? routesForStudentsOnly : []),
     ...(token && user && user.role !== Role.STUDENT ? roleForAdminsProfsOnly : []),
   ]);
 
