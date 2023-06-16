@@ -191,10 +191,10 @@ export const StudentAttendence = () => {
         {attendences.map((attendence, index) => (
           <StudentAttendenceCard
             key={attendence.id}
-            {...attendence}
             borderBottom={index !== attendences.length - 1 ? "1px solid #E2E8F0" : "none"}
             roundedTop={index === 0 ? "md" : "none"}
             roundedBottom={index === attendences.length - 1 ? "md" : "none"}
+            {...attendence}
           />
         ))}
       </VStack>
