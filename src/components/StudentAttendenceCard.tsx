@@ -1,7 +1,22 @@
-import { Avatar, HStack, Text, Badge, Box, BoxProps } from "@chakra-ui/react";
+import {
+  Avatar,
+  HStack,
+  Text,
+  useDisclosure,
+  Modal,
+  ModalBody,
+  ModalHeader,
+  ModalOverlay,
+  ModalContent,
+  Button,
+  ModalFooter,
+  ModalCloseButton,
+  BoxProps,
+  Badge,
+  Box,
+} from "@chakra-ui/react";
 import { AbsentaStatus } from "types";
 
-// it extends chakra component props
 interface StudentAttendenceCardProps extends BoxProps {
   id: number;
   subject: string;
@@ -21,6 +36,7 @@ export const StudentAttendenceCard = ({
   isChanged,
   ...rest
 }: StudentAttendenceCardProps) => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const iconLetter = subject[0].toUpperCase();
   const iconColor = isChanged ? "red.500" : "brand.500";
   const statusColorScheme =
@@ -41,30 +57,60 @@ export const StudentAttendenceCard = ({
       _hover={{
         backgroundColor: "gray.50",
       }}
+      onClick={onOpen}
       {...rest}
     >
-      <HStack spacing={4}>
-        <Avatar name={iconLetter} bg={iconColor} size="sm" />
+      <HStack justifyContent="space-between" w="full">
+        <HStack spacing={4}>
+          <Avatar name={iconLetter} bg={iconColor} size="sm" />
+          <HStack spacing={2}>
+            <Text fontWeight="medium" w="340px">
+              {subject}
+            </Text>
+            <Text w="220px" color="gray.500">
+              Prof. {prof}
+            </Text>
+            <Text fontSize="sm" color="gray.500">
+              {year}
+            </Text>
+          </HStack>
+        </HStack>
+
         <HStack spacing={2}>
-          <Text fontWeight="medium" w="340px">
-            {subject}
+          <Text w="120px" color="gray.500">
+            {count} absențe
           </Text>
-          <Text w="220px" color="gray.500">
-            Prof. {prof}
-          </Text>
-          <Text fontSize="sm" color="gray.500">
-            {year}
-          </Text>
+          <Box w="80px">
+            <Badge colorScheme={statusColorScheme} w="fit-content" ml="auto" display="block">
+              {status}
+            </Badge>
+          </Box>
         </HStack>
       </HStack>
-      <HStack spacing={6}>
-        <Text fontSize="sm">{count} absențe</Text>
-        <Box w="84px">
-          <Badge colorScheme={statusColorScheme} ml="auto" display="block" w="fit-content">
-            {status}
-          </Badge>
-        </Box>
-      </HStack>
+
+      <Modal isOpen={isOpen} onClose={onClose}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Descriere</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            Obiect: {subject}
+            <br />
+            Profesor: {prof}
+            <br />
+            Nr. absenţe: {count}
+            <br />
+            Statut: {status}
+            <br />
+            Anul: {year}
+          </ModalBody>
+          <ModalFooter>
+            <Button colorScheme="brand" mr={3} onClick={onClose}>
+              Închide
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
     </HStack>
   );
 };
