@@ -2,7 +2,6 @@ import {
   Flex,
   Box,
   FormControl,
-  FormLabel,
   Input,
   Stack,
   Button,
@@ -10,8 +9,6 @@ import {
   useColorModeValue,
   Select,
   Image,
-  HStack,
-  VStack,
 } from "@chakra-ui/react";
 import { useState } from "react";
 

@@ -7,12 +7,12 @@ export interface User {
 
 export interface Student extends User {
   group: string;
-  absente: Absenta[];
+  // absente: Absenta[];
 }
 
 export interface Absenta {
   id: number;
-  student: User;
+  numeStudent: string;
   prof: User;
   subject: string;
   status: AbsentaStatus;

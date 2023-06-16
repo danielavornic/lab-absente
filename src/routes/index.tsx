@@ -3,7 +3,7 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { useAuth } from "hooks";
 import { Role } from "types";
 import { ProtectedRoute } from "./ProtectedRoute";
-import { Login, Noutati } from "pages";
+import { Login, Noutati, Students } from "pages";
 import { StudentAttendence } from "pages/StudentAttendence";
 
 const Routes = () => {
@@ -17,6 +17,10 @@ const Routes = () => {
     {
       path: "/absente",
       element: <StudentAttendence />,
+    },
+    {
+      path: "/studenti",
+      element: <Students />,
     },
   ];
 
@@ -44,7 +48,7 @@ const Routes = () => {
       children: [
         {
           path: "/students",
-          element: <div>Studenti</div>,
+          element: <Students />,
         },
         {
           path: "/students/:id/absente",
@@ -57,7 +61,7 @@ const Routes = () => {
   const routesForNotAuthenticatedOnly = [
     {
       path: "/",
-      element: <div>Home Page</div>,
+      element: <Login />,
     },
     {
       path: "/login",
@@ -68,7 +72,7 @@ const Routes = () => {
   const router = createBrowserRouter([
     ...routesForPublic,
     ...(!token ? routesForNotAuthenticatedOnly : []),
-    ...(token && user && user.role !== Role.STUDENT ? routesForStudentsOnly : []),
+    ...(token && user && user.role === Role.STUDENT ? routesForStudentsOnly : []),
     ...(token && user && user.role !== Role.STUDENT ? roleForAdminsProfsOnly : []),
   ]);
 

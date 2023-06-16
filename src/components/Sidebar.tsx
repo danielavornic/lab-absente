@@ -24,9 +24,11 @@ import {
   FiCalendar,
   FiBell,
   FiSlash,
+  FiUsers,
 } from "react-icons/fi";
 import { Link, useLocation } from "react-router-dom";
 import utmBadge from "assets/utm_icon.jpg";
+import { useAuth } from "hooks";
 
 interface LinkItemProps {
   name: string;
@@ -52,9 +54,27 @@ const studentLinkItems: Array<LinkItemProps> = [
   { name: "Notificări", icon: FiBell, href: "/notificari" },
 ];
 
+const profLinkItems: Array<LinkItemProps> = [
+  { name: "Noutăți", icon: FiHome, href: "/noutati" },
+  { name: "Materii", icon: FiLayers, href: "/materii" },
+  { name: "Studenți", icon: FiUsers, href: "/studenti" },
+  { name: "Notificări", icon: FiBell, href: "/notificari" },
+];
+
+const adminLinkItems: Array<LinkItemProps> = [
+  { name: "Noutăți", icon: FiHome, href: "/noutati" },
+  { name: "Materii", icon: FiLayers, href: "/materii" },
+  { name: "Studenți", icon: FiUsers, href: "/studenti" },
+  { name: "Cadre Didactice", icon: FiUsers, href: "/ppl" },
+  { name: "Notificări", icon: FiBell, href: "/notificari" },
+];
+
 export const Sidebar = ({ onClose, ...rest }: SidebarProps) => {
   const { pathname } = useLocation();
+  const { user } = useAuth();
+
   const linkItems = studentLinkItems;
+  // const linkItems = profLinkItems;
 
   return (
     <Flex
