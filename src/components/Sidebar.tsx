@@ -73,7 +73,7 @@ export const Sidebar = ({ onClose, ...rest }: SidebarProps) => {
     >
       <Box>
         <Flex h="20" alignItems="center" mx="8">
-          <Image src={utmBadge} alt="logo" w="64px" mr="4" />
+          <Image src={utmBadge} alt="logo" w="68px" mr="4" />
           <Text fontSize="3xl" fontWeight="bold" mt="-8px" color="brand.500">
             SIMU
           </Text>
