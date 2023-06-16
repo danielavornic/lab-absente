@@ -3,6 +3,7 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { useAuth } from "hooks";
 import { Role } from "types";
 import { ProtectedRoute } from "./ProtectedRoute";
+import { Login } from "pages/Login";
 
 const Routes = () => {
   const { token, user } = useAuth();
@@ -55,7 +56,7 @@ const Routes = () => {
     },
     {
       path: "/login",
-      element: <div>Login</div>,
+      element: <Login />,
     },
   ];
 
