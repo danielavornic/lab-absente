@@ -1,6 +1,6 @@
 import { createRoot } from "react-dom/client";
-import "tailwindcss/tailwind.css";
 import { ChakraProvider, extendTheme } from "@chakra-ui/react";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { AuthProvider } from "providers";
 import Routes from "routes";
 
@@ -21,12 +21,20 @@ const theme = extendTheme({
       900: "#042C47",
     },
   },
+  fonts: {
+    heading: "Inter",
+    body: "Inter",
+  },
 });
+
+const queryClient = new QueryClient();
 
 root.render(
   <ChakraProvider theme={theme}>
-    <AuthProvider>
-      <Routes />
-    </AuthProvider>
+    <QueryClientProvider client={queryClient}>
+      <AuthProvider>
+        <Routes />
+      </AuthProvider>
+    </QueryClientProvider>
   </ChakraProvider>,
 );
