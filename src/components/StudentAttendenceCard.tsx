@@ -1,7 +1,9 @@
-import { Avatar, HStack, Text, Badge, Box } from "@chakra-ui/react";
+import { Avatar, HStack, Text, Badge, Box, BoxProps } from "@chakra-ui/react";
 import { AbsentaStatus } from "types";
 
-interface StudentAttendenceCardProps {
+// it extends chakra component props
+interface StudentAttendenceCardProps extends BoxProps {
+  id: number;
   subject: string;
   count: number;
   prof: string;
@@ -17,6 +19,7 @@ export const StudentAttendenceCard = ({
   status,
   year,
   isChanged,
+  ...rest
 }: StudentAttendenceCardProps) => {
   const iconLetter = subject[0].toUpperCase();
   const iconColor = isChanged ? "red.500" : "brand.500";
@@ -32,18 +35,18 @@ export const StudentAttendenceCard = ({
       spacing={4}
       boxShadow="sm"
       justifyContent="space-between"
-      rounded="md"
       p={4}
       bg="white"
       cursor="pointer"
       _hover={{
         backgroundColor: "gray.50",
       }}
+      {...rest}
     >
       <HStack spacing={4}>
         <Avatar name={iconLetter} bg={iconColor} size="sm" />
         <HStack spacing={2}>
-          <Text fontWeight="medium" w="320px">
+          <Text fontWeight="medium" w="340px">
             {subject}
           </Text>
           <Text w="220px" color="gray.500">
