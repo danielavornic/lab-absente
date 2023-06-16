@@ -21,7 +21,9 @@
       "@pages/*": ["src/pages/*"],
       "@styles/*": ["src/styles/*"],
       "@hooks/*": ["src/hooks/*"],
-      "@context/*": ["src/context/*"]
+      "@context/*": ["src/context/*"],
+      "@providers/*": ["src/providers/*"],
+      "@types/*": ["src/types/*"]
     }
   },
   "include": ["src"],

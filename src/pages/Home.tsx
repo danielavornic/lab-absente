@@ -1,6 +1,6 @@
 import { Container, Text } from "@chakra-ui/react";
 
-function App() {
+export const Home = () => {
   return (
     <Container maxW="container.xl">
       <Text
@@ -13,6 +13,4 @@ function App() {
       </Text>
     </Container>
   );
-}
-
-export default App;
+};

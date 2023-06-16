@@ -1,7 +1,8 @@
 import { createRoot } from "react-dom/client";
 import "tailwindcss/tailwind.css";
-import App from "components/App";
 import { ChakraProvider, extendTheme } from "@chakra-ui/react";
+import { AuthProvider } from "providers";
+import Routes from "routes";
 
 const container = document.getElementById("root") as HTMLDivElement;
 const root = createRoot(container);
@@ -24,6 +25,8 @@ const theme = extendTheme({
 
 root.render(
   <ChakraProvider theme={theme}>
-    <App />
+    <AuthProvider>
+      <Routes />
+    </AuthProvider>
   </ChakraProvider>,
 );
