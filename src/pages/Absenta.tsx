@@ -1,10 +1,12 @@
-import { HStack, VStack, Text, Button } from "@chakra-ui/react";
+import { HStack, VStack, Text, Button, useDisclosure } from "@chakra-ui/react";
 import Select from "react-select";
-import { Layout, StudentAttendenceCard } from "components";
+import { AbsentaModal, Layout, StudentAttendenceCard } from "components";
 import { useSearchParams } from "react-router-dom";
-import { AbsentaStatus, Absenta as Ab } from "types";
+import { AbsentaStatus, Absenta as Ab, Role, ModalMode } from "types";
+import { useState } from "react";
+import { useAuth } from "hooks";
 
-const attendences: Ab[] = [
+const attendencesC: Ab[] = [
   {
     id: 1,
     numeStudent: "John Doe",
@@ -40,6 +42,10 @@ const attendences: Ab[] = [
     datesAbsenta: [
       { date: "2023-06-07", time: "10:00" },
       { date: "2023-06-08", time: "12:30" },
+    ],
+    datesRecuperare: [
+      { date: "2023-06-11", time: "15:00" },
+      { date: "2023-06-12", time: "17:30" },
     ],
   },
   {
@@ -113,12 +119,29 @@ export const Absenta = ({ id }: { id: string }) => {
   const grupa = "FAF-221";
   const student = "John Doe";
 
+  const [attendences, setAttendences] = useState<Ab[]>(attendencesC);
+
+  const { user } = useAuth();
+
   const [searchParams, setSearchParams] = useSearchParams();
+
+  const [absenta, setAbsenta] = useState<Ab>({
+    id: 0,
+    numeProf: user?.role === Role.PROF ? `${user?.name} ${user?.surname}` : "",
+    numeStudent: student,
+    subject: "",
+    status: AbsentaStatus.NEACHITAT,
+    datesAbsenta: [],
+    datesRecuperare: [],
+  });
 
   const urlStatuses = searchParams.get("status")?.split(",") ?? [];
   const urlSubjects = searchParams.get("subject")?.split(",") ?? [];
   const urlYears = searchParams.get("year")?.split(",") ?? [];
   const sortBy = searchParams.get("sortBy") || "newest";
+
+  const [modalState, setModalState] = useState<ModalMode>("add");
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   const updateSearchParams = (key: string, value: string | number | boolean) => {
     const params = new URLSearchParams(searchParams.toString());
@@ -148,9 +171,11 @@ export const Absenta = ({ id }: { id: string }) => {
         <Text fontSize="2xl" fontWeight="bold">
           {student} - {grupa}
         </Text>
-        <Button colorScheme="brand" size="sm">
-          Adaugă absență
-        </Button>
+        {user?.role === Role.PROF && (
+          <Button colorScheme="brand" size="sm" onClick={onOpen}>
+            Adaugă absență
+          </Button>
+        )}
       </HStack>
       <HStack spacing={4} mb={6} justifyContent="space-between">
         <HStack spacing={4}>
@@ -229,6 +254,14 @@ export const Absenta = ({ id }: { id: string }) => {
           <StudentAttendenceCard
             key={attendence.id}
             absenta={attendence}
+            setAbsenta={() => {
+              // update from attendences
+              setAttendences((attendences) => {
+                const newAttendences = [...attendences];
+                newAttendences[index] = absenta;
+                return newAttendences;
+              });
+            }}
             borderBottom={index !== attendences.length - 1 ? "1px solid #E2E8F0" : "none"}
             roundedTop={index === 0 ? "md" : "none"}
             roundedBottom={index === attendences.length - 1 ? "md" : "none"}
@@ -236,6 +269,15 @@ export const Absenta = ({ id }: { id: string }) => {
           />
         ))}
       </VStack>
+
+      <AbsentaModal
+        modalState={modalState}
+        setModalState={setModalState}
+        isOpen={isOpen}
+        onClose={onClose}
+        absenta={absenta}
+        setAbsenta={setAbsenta}
+      />
     </Layout>
   );
 };

@@ -3,6 +3,7 @@ export interface User {
   name: string;
   surname: string;
   role: Role;
+  email: string;
 }
 
 export interface Student extends User {
@@ -36,3 +37,5 @@ export enum Role {
   STUDENT = "student",
   PROF = "professor",
 }
+
+export type ModalMode = "add" | "view" | "edit" | "recuperare";

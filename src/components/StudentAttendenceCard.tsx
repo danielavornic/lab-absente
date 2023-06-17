@@ -1,40 +1,28 @@
-import {
-  Avatar,
-  HStack,
-  Text,
-  useDisclosure,
-  Modal,
-  ModalBody,
-  ModalHeader,
-  ModalOverlay,
-  ModalContent,
-  Button,
-  ModalFooter,
-  ModalCloseButton,
-  BoxProps,
-  Badge,
-  Box,
-} from "@chakra-ui/react";
-import { Absenta, AbsentaStatus } from "types";
-import React from "react";
+import { Avatar, HStack, Text, useDisclosure, BoxProps, Badge, Box } from "@chakra-ui/react";
+import { Absenta, AbsentaStatus, ModalMode } from "types";
+import { AbsentaModal } from "./AbsentaModal";
+import { useState } from "react";
 
 interface StudentAttendenceCardProps extends BoxProps {
   absenta: Absenta;
+  setAbsenta: (absenta: Absenta) => void;
   isChanged: boolean;
 }
 
 export const StudentAttendenceCard = ({
   absenta,
+  setAbsenta,
   isChanged,
   ...rest
 }: StudentAttendenceCardProps) => {
   const { numeStudent, numeProf: prof, subject, status, datesAbsenta, datesRecuperare } = absenta;
+  const [modalState, setModalState] = useState<ModalMode>("view");
 
-  const year = datesAbsenta[0].date.slice(0, 4);
+  const year = datesAbsenta[0]?.date ? datesAbsenta[0].date.slice(0, 4) : "";
   const count = datesAbsenta.length;
 
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const iconLetter = subject[0].toUpperCase();
+  const iconLetter = subject[0]?.toUpperCase();
   const iconColor = isChanged ? "red.500" : "brand.500";
   const statusColorScheme =
     status === AbsentaStatus.NEACHITAT
@@ -85,48 +73,17 @@ export const StudentAttendenceCard = ({
         </HStack>
       </HStack>
 
-      <Modal isOpen={isOpen} onClose={onClose}>
-        <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>Absență</ModalHeader>
-          <ModalCloseButton />
-          <ModalBody>
-            Obiect: {subject}
-            <br />
-            Profesor: {prof}
-            <br />
-            Nr. absenţe: {count}
-            <br />
-            Statut: {status}
-            <br />
-            Data absenţei: 
-            <br />
-            {datesAbsenta.map((date, index) => (
-              <React.Fragment key={date.date}>
-                &nbsp;&nbsp;&nbsp;&nbsp;{index + 1}) {date.date}, {date.time}
-                <br />
-              </React.Fragment>
-            ))}
-            {datesRecuperare && 
-              <>
-                Data recuperare: 
-                  <br />
-                  {datesRecuperare.map((date, index) => (
-                    <React.Fragment key={date.date}>
-                      &nbsp;&nbsp;&nbsp;&nbsp;{index + 1}) {date.date}, {date.time}
-                      <br />
-                    </React.Fragment>
-                  ))}
-              </>
-            }
-          </ModalBody>
-          <ModalFooter>
-            <Button colorScheme="brand" onClick={onClose} size="sm">
-              Închide
-            </Button>
-          </ModalFooter>
-        </ModalContent>
-      </Modal>
+      <AbsentaModal
+        isOpen={isOpen}
+        onClose={() => {
+          setModalState("view");
+          onClose();
+        }}
+        absenta={absenta}
+        setAbsenta={setAbsenta}
+        modalState={modalState}
+        setModalState={setModalState}
+      />
     </HStack>
   );
 };
