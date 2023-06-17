@@ -87,7 +87,7 @@ export const StudentAttendenceCard = ({
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Descriere</ModalHeader>
+          <ModalHeader>Absență</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
             Obiect: {subject}
@@ -101,7 +101,7 @@ export const StudentAttendenceCard = ({
             Anul: {year}
           </ModalBody>
           <ModalFooter>
-            <Button colorScheme="brand" mr={3} onClick={onClose}>
+            <Button colorScheme="brand" onClick={onClose} size="sm">
               Închide
             </Button>
           </ModalFooter>
