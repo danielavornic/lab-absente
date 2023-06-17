@@ -1,11 +1,10 @@
-import { HStack, VStack } from "@chakra-ui/react";
+import { HStack, VStack, Text, Button } from "@chakra-ui/react";
+import Select from "react-select";
 import { Layout, StudentAttendenceCard } from "components";
 import { useSearchParams } from "react-router-dom";
-import { Absenta, AbsentaStatus } from "types";
+import { AbsentaStatus, Absenta as Ab } from "types";
 
-import Select from "react-select";
-
-const attendences: Absenta[] = [
+const attendences: Ab[] = [
   {
     id: 1,
     numeStudent: "John Doe",
@@ -110,7 +109,10 @@ const selectStyles = {
   }),
 };
 
-export const StudentAttendence = () => {
+export const Absenta = ({ id }: { id: string }) => {
+  const grupa = "FAF-221";
+  const student = "John Doe";
+
   const [searchParams, setSearchParams] = useSearchParams();
 
   const urlStatuses = searchParams.get("status")?.split(",") ?? [];
@@ -141,7 +143,15 @@ export const StudentAttendence = () => {
   };
 
   return (
-    <Layout title="Recuperarea absențelor">
+    <Layout title="Absențe">
+      <HStack justifyContent="space-between" mb={6}>
+        <Text fontSize="2xl" fontWeight="bold">
+          {student} - {grupa}
+        </Text>
+        <Button colorScheme="brand" size="sm">
+          Adaugă absență
+        </Button>
+      </HStack>
       <HStack spacing={4} mb={6} justifyContent="space-between">
         <HStack spacing={4}>
           <Select

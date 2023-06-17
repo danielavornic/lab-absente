@@ -3,7 +3,7 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { useAuth } from "hooks";
 import { Role } from "types";
 import { ProtectedRoute } from "./ProtectedRoute";
-import { Login, Noutati, Students } from "pages";
+import { Absenta, Groups, Login, Noutati, Students } from "pages";
 import { StudentAttendence } from "pages/StudentAttendence";
 
 const Routes = () => {
@@ -19,8 +19,16 @@ const Routes = () => {
       element: <StudentAttendence />,
     },
     {
-      path: "/studenti",
-      element: <Students />,
+      path: "/grupe/:id",
+      element: <Students id={"1"} />,
+    },
+    {
+      path: "/grupe",
+      element: <Groups />,
+    },
+    {
+      path: "/students/:id/absente",
+      element: <Absenta id={"1"} />,
     },
   ];
 
@@ -47,12 +55,16 @@ const Routes = () => {
       element: <ProtectedRoute />,
       children: [
         {
-          path: "/students",
-          element: <Students />,
+          path: "/grupe/:id",
+          element: <Students id={"1"} />,
         },
         {
           path: "/students/:id/absente",
-          element: <div>Absente S</div>,
+          element: <Absenta id={"1"} />,
+        },
+        {
+          path: "/grupe",
+          element: <Groups />,
         },
       ],
     },

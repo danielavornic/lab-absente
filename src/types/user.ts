@@ -6,8 +6,7 @@ export interface User {
 }
 
 export interface Student extends User {
-  group: string;
-  // absente: Absenta[];
+  grupa: string;
 }
 
 export interface Absenta {
