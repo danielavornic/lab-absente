@@ -57,14 +57,14 @@ const studentLinkItems: Array<LinkItemProps> = [
 const profLinkItems: Array<LinkItemProps> = [
   { name: "Noutăți", icon: FiHome, href: "/noutati" },
   { name: "Materii", icon: FiLayers, href: "/materii" },
-  { name: "Studenți", icon: FiUsers, href: "/studenti" },
+  { name: "Grupe", icon: FiUsers, href: "/grupe" },
   { name: "Notificări", icon: FiBell, href: "/notificari" },
 ];
 
 const adminLinkItems: Array<LinkItemProps> = [
   { name: "Noutăți", icon: FiHome, href: "/noutati" },
   { name: "Materii", icon: FiLayers, href: "/materii" },
-  { name: "Studenți", icon: FiUsers, href: "/studenti" },
+  { name: "Grupe", icon: FiUsers, href: "/grupe" },
   { name: "Cadre Didactice", icon: FiUsers, href: "/ppl" },
   { name: "Notificări", icon: FiBell, href: "/notificari" },
 ];
@@ -73,8 +73,8 @@ export const Sidebar = ({ onClose, ...rest }: SidebarProps) => {
   const { pathname } = useLocation();
   const { user } = useAuth();
 
-  const linkItems = studentLinkItems;
-  // const linkItems = profLinkItems;
+  // const linkItems = studentLinkItems;
+  const linkItems = profLinkItems;
 
   return (
     <Flex
@@ -92,7 +92,13 @@ export const Sidebar = ({ onClose, ...rest }: SidebarProps) => {
       {...rest}
     >
       <Box>
-        <Flex h="20" alignItems="center" mx="8">
+        <Flex
+          h="20"
+          alignItems="center"
+          px="8"
+          borderBottomWidth="1px"
+          borderBottomColor="gray.200"
+        >
           <Image src={utmBadge} alt="logo" w="68px" mr="4" />
           <Text fontSize="3xl" fontWeight="bold" mt="-8px" color="brand.500">
             SIMU
@@ -100,7 +106,7 @@ export const Sidebar = ({ onClose, ...rest }: SidebarProps) => {
           <CloseButton display={{ base: "flex", md: "none" }} onClick={onClose} />
         </Flex>
         {linkItems.map((link) => {
-          const isActive = pathname === link.href;
+          const isActive = pathname.split("/")[1] === link.href.slice(1, link.href.length);
           return (
             <NavItem
               key={link.name}
