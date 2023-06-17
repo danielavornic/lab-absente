@@ -16,6 +16,7 @@ import {
   Box,
 } from "@chakra-ui/react";
 import { Absenta, AbsentaStatus } from "types";
+import React from "react";
 
 interface StudentAttendenceCardProps extends BoxProps {
   absenta: Absenta;
@@ -98,7 +99,26 @@ export const StudentAttendenceCard = ({
             <br />
             Statut: {status}
             <br />
-            Anul: {year}
+            Data absenţei: 
+            <br />
+            {datesAbsenta.map((date, index) => (
+              <React.Fragment key={date.date}>
+                &nbsp;&nbsp;&nbsp;&nbsp;{index + 1}) {date.date}, {date.time}
+                <br />
+              </React.Fragment>
+            ))}
+            {datesRecuperare && 
+              <>
+                Data recuperare: 
+                  <br />
+                  {datesRecuperare.map((date, index) => (
+                    <React.Fragment key={date.date}>
+                      &nbsp;&nbsp;&nbsp;&nbsp;{index + 1}) {date.date}, {date.time}
+                      <br />
+                    </React.Fragment>
+                  ))}
+              </>
+            }
           </ModalBody>
           <ModalFooter>
             <Button colorScheme="brand" onClick={onClose} size="sm">
